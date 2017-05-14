@@ -12,7 +12,7 @@ from tempfile import gettempdir
 from boto3 import Session
 from botocore.exceptions import BotoCoreError, ClientError
 
-from config import LEVEL, CACHE, VOICE, AWS_PROFILE, AWS_ACCESS_KEY_ID, AWS_SECRECT_ACCESS_KEY, AWS_REGION
+from config import LEVEL, CACHE, VOICE, AWS_PROFILE, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION
 
 log_format = '%(asctime)s - %(levelname)s - %(message)s'
 logging.basicConfig(stream=sys.stdout, level=LEVEL, format=log_format)
@@ -23,7 +23,7 @@ if AWS_PROFILE:
     session = Session(profile_name=AWS_PROFILE)
     logging.info('Using profile name: {0}'.format(AWS_PROFILE))
 else:
-    session = Session(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRECT_ACCESS_KEY,
+    session = Session(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
                       region_name=AWS_REGION)
     logging.info('Using without credentials and config files')
 
