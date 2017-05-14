@@ -21,11 +21,11 @@ if AWS_PROFILE:
     # create a client using the credentials and region defined
     # in the AWS_PROFILE section of the AWS credentials and config files
     session = Session(profile_name=AWS_PROFILE)
-    logging.info('using profile name: {0}'.format(AWS_PROFILE))
+    logging.info('Using profile name: {0}'.format(AWS_PROFILE))
 else:
     session = Session(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRECT_ACCESS_KEY,
                       region_name=AWS_REGION)
-    logging.info('using without credentials and config files')
+    logging.info('Using without credentials and config files')
 
 polly = session.client('polly')
 
@@ -55,9 +55,9 @@ def retrieve_audio(sentence):
     # call AWS
     try:
         response = polly.synthesize_speech(Text=sentence, OutputFormat=output_format, VoiceId=VOICE)
-
     except (BotoCoreError, ClientError) as err:
         logging.error(err)
+        return None
 
     # access the audio stream from the response
     if 'AudioStream' in response:
