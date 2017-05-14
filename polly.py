@@ -14,6 +14,9 @@ from botocore.exceptions import BotoCoreError, ClientError
 
 from config import LEVEL, CACHE, VOICE, AWS_PROFILE, AWS_ACCESS_KEY_ID, AWS_SECRECT_ACCESS_KEY, AWS_REGION
 
+log_format = '%(asctime)s - %(levelname)s - %(message)s'
+logging.basicConfig(stream=sys.stdout, level=LEVEL, format=log_format)
+
 if AWS_PROFILE:
     # create a client using the credentials and region defined
     # in the AWS_PROFILE section of the AWS credentials and config files
@@ -44,9 +47,9 @@ def retrieve_audio(sentence):
     hash = calculate_hash('{0}-{1}'.format(VOICE, sentence))
     file_name = '{0}.{1}'.format(hash, output_format)
     output = os.path.join(gettempdir(), file_name)
-    logging.info(output)
 
     if CACHE and os.path.isfile(output):
+        logging.info('Using file {0}'.format(output))
         return output
 
     # call AWS
@@ -63,6 +66,7 @@ def retrieve_audio(sentence):
                 # open a file for writing the output as a binary stream
                 with open(output, 'wb') as file:
                     file.write(stream.read())
+                    logging.info('Generated new file {0}'.format(output))
                     return output
             except IOError as error:
                 logging.error(error)
@@ -84,9 +88,6 @@ def play(sentence):
 
 
 if __name__ == '__main__':
-    log_format = '%(asctime)s - %(levelname)s - %(message)s'
-    logging.basicConfig(stream=sys.stdout, level=LEVEL, format=log_format)
-
     sentence = 'This is just an example'
 
     play(sentence)
