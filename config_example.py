@@ -4,7 +4,7 @@ import logging
 LEVEL = logging.INFO
 # FS cache
 CACHE = True
-# voice id
+# Voice ID
 VOICE = 'Joanna'
 # AWS data: if profile is defined it has priority
 AWS_PROFILE = 'default'

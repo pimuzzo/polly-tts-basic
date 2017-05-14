@@ -15,7 +15,8 @@ from botocore.exceptions import BotoCoreError, ClientError
 from config import LEVEL, CACHE, VOICE, AWS_PROFILE, AWS_ACCESS_KEY_ID, AWS_SECRECT_ACCESS_KEY, AWS_REGION
 
 if AWS_PROFILE:
-    # create a client using the credentials and region defined in the AWS_PROFILE section of the AWS credentials and config files
+    # create a client using the credentials and region defined
+    # in the AWS_PROFILE section of the AWS credentials and config files
     session = Session(profile_name=AWS_PROFILE)
     logging.info('using profile name: {0}'.format(AWS_PROFILE))
 else:
