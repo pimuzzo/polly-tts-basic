@@ -14,9 +14,6 @@ from botocore.exceptions import BotoCoreError, ClientError
 
 from config import LEVEL, CACHE, VOICE, AWS_PROFILE, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION
 
-log_format = '%(asctime)s - %(levelname)s - %(message)s'
-logging.basicConfig(stream=sys.stdout, level=LEVEL, format=log_format)
-
 if AWS_PROFILE:
     # create a client using the credentials and region defined
     # in the AWS_PROFILE section of the AWS credentials and config files
@@ -37,9 +34,7 @@ def describe_voices(language_code):
 
 
 def calculate_hash(data):
-    m = hashlib.md5()
-    m.update(data)
-    return m.hexdigest()
+    return hashlib.md5(data.encode('utf-8')).hexdigest()
 
 
 def retrieve_audio(sentence):
@@ -88,6 +83,6 @@ def play(sentence):
 
 
 if __name__ == '__main__':
-    sentence = 'This is just an example'
-
-    play(sentence)
+    log_format = '%(asctime)s - %(levelname)s - %(message)s'
+    logging.basicConfig(stream=sys.stdout, level=LEVEL, format=log_format)
+    play('This is just an example')
